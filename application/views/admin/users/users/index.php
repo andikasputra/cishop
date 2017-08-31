@@ -4,10 +4,7 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Fixed Sidebar <small> Just add class <strong>menu_fixed</strong></small></h3>
-          <?= site_url() ?>
-          <br>
-          <?= base_url() ?>
+          <h3>Daftar Pengguna</h3>
         </div>
       </div>
     </div>
