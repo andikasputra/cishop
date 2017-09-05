@@ -40,7 +40,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>Andika</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -50,7 +50,7 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
+                <h3>Menu Navigasi</h3>
                 <ul class="nav side-menu">
                   <li><a href="<?= site_url('admin/dashboard/dashboard') ?>"><i class="fa fa-home"></i> Dashboard</a></li>
                   <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
@@ -87,7 +87,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= base_url('resource/images/img.jpg') ?>" alt="">John Doe
+                    <img src="<?= base_url('resource/images/img.jpg') ?>" alt="">Andika
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
