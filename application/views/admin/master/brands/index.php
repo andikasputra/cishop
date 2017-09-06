@@ -4,7 +4,7 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Daftar Merk / Brand</h3>
+          <h3>Brands / Merk</h3>
         </div>
         <div class="title_right">
           <div class="col-md-8 col-sm-8 col-xs-12 form-group pull-right top_search">
@@ -22,7 +22,7 @@
         <div class="col-md-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Data Brand / Merk<small>basic table subtitle</small></h2>
+              <h2>Daftar Data<small>basic table subtitle</small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>

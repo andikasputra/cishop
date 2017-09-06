@@ -4,7 +4,7 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Brands / Merk</h3>
+          <h3>Produk</h3>
         </div>
       </div>
       <div class="clearfix"></div>
@@ -16,7 +16,7 @@
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
-                <li><a href="<?= site_url('admin/master/brands') ?>"><i class="fa fa-arrow-left"></i> Back</a>
+                <li><a href="<?= site_url('admin/master/products') ?>"><i class="fa fa-arrow-left"></i> Back</a>
                 </li>
               </ul>
               <div class="clearfix"></div>

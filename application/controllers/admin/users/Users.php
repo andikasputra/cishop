@@ -4,4 +4,9 @@ class Users extends CI_Controller {
 		// load view
 		$this->load->view('admin/users/users/index');
 	}
+
+	public function add() {
+		// load view
+		$this->load->view('admin/users/users/add');
+	}
 }
