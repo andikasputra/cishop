@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 09 Sep 2017 pada 21.15
+-- Generation Time: 09 Sep 2017 pada 21.31
 -- Versi Server: 5.6.36
 -- PHP Version: 5.6.31
 
@@ -56,7 +56,7 @@ INSERT INTO `brands` (`brand_id`, `brand_name`, `brand_logo`, `brand_description
 --
 
 CREATE TABLE `categories` (
-  `cateogry_id` int(10) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL,
   `category_name` varchar(255) NOT NULL,
   `category_description` varchar(255) NOT NULL,
   `category_slug` varchar(255) NOT NULL
@@ -66,9 +66,10 @@ CREATE TABLE `categories` (
 -- Dumping data untuk tabel `categories`
 --
 
-INSERT INTO `categories` (`cateogry_id`, `category_name`, `category_description`, `category_slug`) VALUES
+INSERT INTO `categories` (`category_id`, `category_name`, `category_description`, `category_slug`) VALUES
 (1, 'Sepatu', 'data sepatu', 'sepatu'),
-(2, 'Tas', 'data tas', 'tas');
+(2, 'Tas', 'data tas', 'tas'),
+(3, 'Pakaian Pria', 'Macam macam pakaian pria', 'pakaian-pria');
 
 -- --------------------------------------------------------
 
@@ -102,9 +103,9 @@ ALTER TABLE `brands`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`cateogry_id`),
+  ADD PRIMARY KEY (`category_id`),
   ADD UNIQUE KEY `unique_category_slug` (`category_slug`),
-  ADD UNIQUE KEY `unique_cateogry_id` (`cateogry_id`);
+  ADD UNIQUE KEY `unique_cateogry_id` (`category_id`);
 
 --
 -- Indexes for table `products`
@@ -129,7 +130,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cateogry_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -144,7 +145,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `lnk_brands_products` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lnk_categories_products` FOREIGN KEY (`category_id`) REFERENCES `categories` (`cateogry_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lnk_categories_products` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -36,31 +36,32 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Slug</th>
+                    <th width="80px">Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <?php 
+                  $no = 1;
+                  foreach ($list_category as $a) : ?>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th><?= $no++ ?></th>
+                    <td><?= $a['category_name'] ?></td>
+                    <td><?= $a['category_description'] ?></td>
+                    <td><?= $a['category_slug'] ?></td>
+                    <td>
+                      <a href="<?= site_url('admin/master/categories/edit/'.$a['category_id']) ?>" class="btn btn-xs btn-success" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <a href="<?= site_url('admin/master/categories/delete/'.$a['category_id']) ?>" class="btn btn-xs btn-danger" title="Delete">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table>
 

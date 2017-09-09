@@ -17,7 +17,6 @@ class Brands extends CI_Controller {
 		// load view
 		$this->load->view('admin/master/brands/add');
 	}
-
 	public function add_process() {
 		// validasi inputan
 		$this->load->library('form_validation');
