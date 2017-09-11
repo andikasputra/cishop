@@ -29,22 +29,25 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand_name">Name <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="brand_name" name="brand_name" required="required" class="form-control col-md-7 col-xs-12">
+                    <input type="text" id="brand_name" name="brand_name" required="required" class="form-control col-md-7 col-xs-12" value="<?= set_value('brand_name') ?>">
+                    <!-- menampilkan pesan error pada brand_name -->
+                    <?= form_error('brand_name', '<i class="text-danger">', '</i>') ?>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand_description">Description <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <textarea id="brand_description" name="brand_description" required="required" class="form-control col-md-7 col-xs-12"></textarea>
+                    <textarea id="brand_description" name="brand_description" required="required" class="form-control col-md-7 col-xs-12"><?= set_value('brand_description') ?></textarea>
+                    <?= form_error('brand_description', '<i class="text-danger">', '</i>') ?>
                   </div>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                   <label for="brand_logo" class="control-label col-md-3 col-sm-3 col-xs-12">Logo</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="brand_logo" name="brand_logo" class="form-control col-md-7 col-xs-12" type="file">
+                    <input id="brand_logo" name="brand_logo" class="form-control col-md-7 col-xs-12" type="file" accept="image/*">
                   </div>
-                </div> -->
+                </div>
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

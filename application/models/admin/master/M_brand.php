@@ -6,8 +6,17 @@ class M_brand extends CI_Model {
 		return $this->db->get('brands')->result_array();
 	}
 
+	public function get_detail_data($params) {
+		return $this->db->get_where('brands', $params)->row_array();
+	}
+
 	// insert data brand
 	public function insert($params) {
 		return $this->db->insert('brands', $params);
+	}
+
+	// delete data brand
+	public function delete($params) {
+		return $this->db->delete('brands', $params);
 	}
 }

@@ -4,6 +4,7 @@ class Brands extends CI_Controller {
 		parent::__construct();
 		// load model
 		$this->load->model('admin/master/m_brand');
+		$this->load->library('form_validation');
 	}
 
 	public function index() {
@@ -19,18 +20,32 @@ class Brands extends CI_Controller {
 	}
 	public function add_process() {
 		// validasi inputan
-		$this->load->library('form_validation');
 		// aturan
 		$this->form_validation->set_rules('brand_name', 'Name', 'required|max_length[50]');
-		$this->form_validation->set_rules('brand_description', 'Description', 'required|max_length[255]');
+		$this->form_validation->set_rules('brand_description', 'Description', 'required|min_length[5]|max_length[255]');
 		// jalankan validasi
 		if ($this->form_validation->run() !== FALSE) {
 			// jika validasinya tidak error
+			// default logo
+			$logo = 'default.jpg';
+			// upload logo
+			$config['upload_path'] = 'resource/images/brand-icon/';
+			$config['allowed_types'] = 'jpg|jpeg|png|ico|bmp';
+			$config['file_name'] = strtolower(str_replace(' ', '-', $this->input->post('brand_name')));
+			// load library upload & menggunakan config yg dibuat
+			$this->load->library('upload', $config);
+			// proses upload
+			// brand_logo adalah nama input file
+			if ($this->upload->do_upload('brand_logo')) {
+				// ambil nama file yg baru diupload & masukkan ke variable logo
+				$logo = $this->upload->data('file_name');
+			}
 			// buat array dengan key nama kolom di tabel database, dan value nya dengan yg diinputkan user
 			$params = array(
 				'brand_name' => $this->input->post('brand_name'),
 				'brand_description' => $this->input->post('brand_description'),
-				'brand_slug' => strtolower(str_replace(' ', '-', $this->input->post('brand_name')))
+				'brand_slug' => strtolower(str_replace(' ', '-', $this->input->post('brand_name'))),
+				'brand_logo' => $logo
 			);
 			// proses insert dengan model
 			if ($this->m_brand->insert($params)) {
@@ -40,9 +55,24 @@ class Brands extends CI_Controller {
 				// jika insert gagal, tampilkan pesan
 				echo 'error operasi database';
 			}
-		} else {
-			// jika proses validasi error, tampilkan error / yg gagal divalidasi
-			echo validation_errors();
+		}
+		$this->load->view('admin/master/brands/add');
+	}
+
+	// delete
+	public function delete($brand_id = "") {
+		$params = array('brand_id' => $brand_id);
+		// get detail brand
+		$brand = $this->m_brand->get_detail_data($params);
+		// jika brand_logo itu bukan default
+		if ($brand['brand_logo'] != 'default.jpg') {
+			// hapus logo yg tersimpan di resource
+			unlink('resource/images/brand-icon/'.$brand['brand_logo']);
+		}
+		// delete
+		if ($this->m_brand->delete($params)) {
+			// jika query berhasil, arahkan ke brands
+			redirect('admin/master/brands');
 		}
 	}
 }
