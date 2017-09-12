@@ -29,14 +29,16 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="category_name">Name <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="category_name" name="category_name" required="required" class="form-control col-md-7 col-xs-12">
+                    <input type="text" id="category_name" name="category_name" required="required" class="form-control col-md-7 col-xs-12" value="<?= set_value('category_name') ?>">
+                    <?= form_error('category_name', '<i class="text-danger">', '</i>') ?>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="category_description">Description <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <textarea id="category_description" name="category_description" required="required" class="form-control col-md-7 col-xs-12"></textarea>
+                    <textarea id="category_description" name="category_description" required="required" class="form-control col-md-7 col-xs-12"><?= set_value('category_description') ?></textarea>
+                    <?= form_error('category_description', '<i class="text-danger">', '</i>') ?>
                   </div>
                 </div>
                 <div class="ln_solid"></div>

@@ -56,7 +56,7 @@
                       <a href="<?= site_url('admin/master/categories/edit/'.$a['category_id']) ?>" class="btn btn-xs btn-success" title="Edit">
                         <i class="fa fa-pencil"></i>
                       </a>
-                      <a href="<?= site_url('admin/master/categories/delete/'.$a['category_id']) ?>" class="btn btn-xs btn-danger" title="Delete">
+                      <a href="<?= site_url('admin/master/categories/delete/'.$a['category_id']) ?>" class="btn btn-xs btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this category?')">
                         <i class="fa fa-trash"></i>
                       </a>
                     </td>

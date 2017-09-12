@@ -4,6 +4,7 @@ class Categories extends CI_Controller {
 		parent::__construct();
 		// load model
 		$this->load->model('admin/master/m_category');
+		$this->load->library('form_validation');
 	}
 
 	public function index() {
@@ -20,7 +21,6 @@ class Categories extends CI_Controller {
 
 	public function add_process() {
 		// validasi inputan
-		$this->load->library('form_validation');
 		// aturan
 		$this->form_validation->set_rules('category_name', 'Name', 'required|max_length[50]');
 		$this->form_validation->set_rules('category_description', 'Description', 'required|max_length[255]');
@@ -41,9 +41,17 @@ class Categories extends CI_Controller {
 				// jika insert gagal, tampilkan pesan
 				echo 'error operasi database';
 			}
-		} else {
-			// jika proses validasi error, tampilkan error / yg gagal divalidasi
-			echo validation_errors();
+		} 
+		$this->load->view('admin/master/categories/add');
+	}
+
+	// delete
+	public function delete($category_id = "") {
+		$params = array('category_id' => $category_id);
+		// delete
+		if ($this->m_category->delete($params)) {
+			// jika query berhasil, arahkan ke categories
+			redirect('admin/master/categories');
 		}
 	}
 }

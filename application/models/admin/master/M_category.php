@@ -10,4 +10,9 @@ class M_category extends CI_Model {
 	public function insert($params) {
 		return $this->db->insert('categories', $params);
 	}
+
+	// delete data category
+	public function delete($params) {
+		return $this->db->delete('categories', $params);
+	}
 }
