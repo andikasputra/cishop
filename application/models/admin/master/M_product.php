@@ -12,13 +12,28 @@ class M_product extends CI_Model {
 		return $this->db->get_where('products', $params)->row_array();
 	}
 
+	public function get_list_brands() {
+		return $this->db->get('brands')->result_array();
+	}
+
+	public function get_list_categories() {
+		return $this->db->get('categories')->result_array();
+	}
+
 	public function get_product_photos($params) {
 		return $this->db->get_where('product_photos', $params);
 	}
 
 	// insert data product
 	public function insert($params) {
-		return $this->db->insert('products', $params);
+		$this->db->insert('products', $params);
+		// medapatkan primary key terakhir yang baru diinsert
+		return $this->db->insert_id();
+	}
+
+	// insert photo
+	public function insert_photo($params) {
+		return $this->db->insert('product_photos', $params);
 	}
 
 	// delete data product

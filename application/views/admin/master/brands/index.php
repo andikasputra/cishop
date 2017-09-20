@@ -19,7 +19,7 @@
       </div>
       <div class="clearfix"></div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div class="x_panel">
             <div class="x_title">
               <h2>Daftar Data<small>basic table subtitle</small></h2>
@@ -53,7 +53,7 @@
                     <td><?= $a['brand_description'] ?></td>
                     <td><?= $a['brand_slug'] ?></td>
                     <td>
-                      <a href="<?= site_url('admin/master/brand/edit/'.$a['brand_id']) ?>" class="btn btn-xs btn-success" title="Edit">
+                      <a href="<?= site_url('admin/master/brands/edit/'.$a['brand_id']) ?>" class="btn btn-xs btn-success" title="Edit">
                         <i class="fa fa-pencil"></i>
                       </a>
                       <a href="<?= site_url('admin/master/brands/delete/'.$a['brand_id']) ?>" class="btn btn-xs btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this brand?')">

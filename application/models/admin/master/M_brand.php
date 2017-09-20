@@ -15,6 +15,11 @@ class M_brand extends CI_Model {
 		return $this->db->insert('brands', $params);
 	}
 
+	// update data brand
+	public function update($params, $where) {
+		return $this->db->update('brands', $params, $where);
+	}
+
 	// delete data brand
 	public function delete($params) {
 		return $this->db->delete('brands', $params);
