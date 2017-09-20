@@ -36,31 +36,36 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>No</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Purchasing Price (Rp)</th>
+                    <th>Selling Price (Rp)</th>
+                    <th width="80px">Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <?php
+                  $no = 1;
+                  foreach ($list_product as $a) : ?>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td><?= $no++ ?></td>
+                    <td><?= $a['product_name'] ?></td>
+                    <td><?= $a['category_name'] ?></td>
+                    <td><?= $a['brand_name'] ?></td>
+                    <td class="text-right"><?= number_format($a['product_purchasing_price'], 0, ',', '.') ?></td>
+                    <td class="text-right"><?= number_format($a['product_selling_price'], 0, ',', '.') ?></td>
+                    <td>
+                      <a href="<?= site_url('admin/master/products/edit/'.$a['brand_id']) ?>" class="btn btn-xs btn-success" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <a href="<?= site_url('admin/master/products/delete/'.$a['brand_id']) ?>" class="btn btn-xs btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this brand?')">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table>
 

@@ -2,6 +2,12 @@
 class Brands extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+		// cek login
+		// jika session 'auth' itu belum ada
+		if (!$this->session->userdata('auth_admin')) {
+			// arahkan ke admin login
+			redirect('admin/auth/login');
+		}
 		// load model
 		$this->load->model('admin/master/m_brand');
 		$this->load->library('form_validation');
@@ -39,6 +45,8 @@ class Brands extends CI_Controller {
 			if ($this->upload->do_upload('brand_logo')) {
 				// ambil nama file yg baru diupload & masukkan ke variable logo
 				$logo = $this->upload->data('file_name');
+			} else {
+				echo $this->upload->display_errors();
 			}
 			// buat array dengan key nama kolom di tabel database, dan value nya dengan yg diinputkan user
 			$params = array(

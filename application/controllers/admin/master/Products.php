@@ -1,5 +1,5 @@
 <?php 
-class Users extends CI_Controller {
+class Products extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		// cek login
@@ -8,15 +8,19 @@ class Users extends CI_Controller {
 			// arahkan ke admin login
 			redirect('admin/auth/login');
 		}
+		// load model
+		$this->load->model('admin/master/m_product');
 	}
 	
 	public function index() {
+		// all data
+		$data['list_product'] = $this->m_product->get_all_data();
 		// load view
-		$this->load->view('admin/users/users/index');
+		$this->load->view('admin/master/products/index', $data);
 	}
 
 	public function add() {
 		// load view
-		$this->load->view('admin/users/users/add');
+		$this->load->view('admin/master/products/add');
 	}
 }
