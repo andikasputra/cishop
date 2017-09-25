@@ -52,9 +52,9 @@ class Products extends CI_Controller {
 				'product_slug' => strtolower(str_replace(' ', '-', $this->input->post('product_name')))
 			);
 			// proses insert dengan model
-			// echo "<pre>";
-			// print_r($_FILES['photos']); 
-			// echo "</pre>"; exit();
+			echo "<pre>";
+			print_r($_FILES['photos']); 
+			echo "</pre>"; exit();
 			$product_id = $this->m_product->insert($params);
 			if ($product_id) {
 				// jika insert berhasil upload foto
@@ -67,8 +67,8 @@ class Products extends CI_Controller {
 					$_FILES['photo']['size'] = $_FILES['photos']['size'][$i];
 					// config upload
 					$config['upload_path'] = 'resource/images/products/';
-					$config['allowed_types'] = 'jpg|jpeg|png|ico|bmp';
-					$name = $this->input->post('product_name') . '-' . ($i+1);
+					$config['allowed_types'] = 'jpg|jpeg';
+					$name = $this->input->post('product_name') . '-' .$i;
 					$config['file_name'] = strtolower(str_replace(' ', '-', $name));
 					// load library upload & menggunakan config yg dibuat
 					$this->load->library('upload', $config);
@@ -86,9 +86,8 @@ class Products extends CI_Controller {
 					// insert product photo
 					$this->m_product->insert_photo($params);
 				}
-			} else {
-				// jika insert gagal, tampilkan pesan
-				echo 'error operasi database';
+				// jika berhasil, redirect ke produk
+				redirect('admin/master/products');
 			}
 		}
 		$this->load->view('admin/master/products/add');

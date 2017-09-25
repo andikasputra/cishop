@@ -75,6 +75,7 @@ class Brands extends CI_Controller {
 		// load view
 		$this->load->view('admin/master/brands/edit', $data);
 	}
+	
 	public function edit_process($brand_id = "") {
 		// validasi inputan
 		// aturan

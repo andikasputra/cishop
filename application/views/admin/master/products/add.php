@@ -77,7 +77,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Product Photo <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="file" name="photos[]" class="form-control" multiple="multiple">
+                    <input type="file" name="photos[]" class="form-control" multiple="multiple" accept=".jpg">
                   </div>
                 </div>
                 <div class="ln_solid"></div>
