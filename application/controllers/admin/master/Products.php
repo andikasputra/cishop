@@ -38,7 +38,7 @@ class Products extends CI_Controller {
 		$this->form_validation->set_rules('brand_id', 'Brand', 'required|numeric');
 		$this->form_validation->set_rules('product_purchasing_price', 'Purchasing Price', 'required|numeric');
 		$this->form_validation->set_rules('product_selling_price', 'Selling Price', 'required|numeric');
-		$this->form_validation->set_rules('product_description', 'Description', 'required|min_length[5]|max_length[255]');
+		$this->form_validation->set_rules('product_description', 'Description', 'required|min_length[5]');
 		// jalankan validasi
 		if ($this->form_validation->run() !== FALSE) {
 			// jika validasinya tidak error
@@ -52,9 +52,6 @@ class Products extends CI_Controller {
 				'product_slug' => strtolower(str_replace(' ', '-', $this->input->post('product_name')))
 			);
 			// proses insert dengan model
-			echo "<pre>";
-			print_r($_FILES['photos']); 
-			echo "</pre>"; exit();
 			$product_id = $this->m_product->insert($params);
 			if ($product_id) {
 				// jika insert berhasil upload foto

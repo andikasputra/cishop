@@ -37,20 +37,20 @@
 				<label class="line"></label>
 				<div class="mid-popular">
 					<?php foreach($list_products as $item) : ?>
-						<div class="col-md-3 item-grid simpleCart_shelfItem">
+						<div class="col-md-3 item-grid simpleCart_shelfItem" style="margin-top: 40px">
 							<div class=" mid-pop">
 								<div class="pro-img">
-									<img src="<?= base_url('resource/images/products/'.$item['photo_name']) ?>" class="img-responsive" alt="" style="width: 100%; height: 250px;">
+									<img src="<?= base_url('resource/images/products/'.$item['photo_name']) ?>" class="img-responsive" alt="" style="width: 100%; height: 350px;">
 									<div class="zoom-icon ">
 										<a class="picture" href="<?= base_url('resource/images/products/'.$item['photo_name']) ?>" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-										<a href="single.html"><i class="glyphicon glyphicon-menu-right icon"></i></a>
+										<a href="<?= site_url('products/detail/'.$item['product_slug']) ?>"><i class="glyphicon glyphicon-menu-right icon"></i></a>
 									</div>
 								</div>
 								<div class="mid-1">
 									<div class="women">
 										<div class="women-top">
 											<span><?= $item['category_name'] ?></span>
-											<h6><a href="single.html"><?= $item['product_name'] ?></a></h6>
+											<h6><a href="<?= site_url('products/detail/'.$item['product_slug']) ?>"><?= $item['product_name'] ?></a></h6>
 										</div>
 										<div class="img item_add">
 											<a href="#"><img src="" alt=""></a>
