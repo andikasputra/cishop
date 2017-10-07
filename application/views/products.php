@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header', $header) ?>
+<?php $this->load->view('layout/header') ?>
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
@@ -26,7 +26,7 @@
 						<div class="women">
 						<div class="women-top">
 							<span><?= $item['category_name'] ?></span>
-							<h6><a href="<?= site_url('products/detail/'.$item['product_slug']) ?>"><?= $item['product_name'] ?></a></h6>
+							<h6><a href="<?= site_url('products/detail/'.$item['product_slug']) ?>"><?= substr($item['product_name'], 0, 18) ?></a></h6>
 							</div>
 							<div class="img item_add">
 								<a href="#"><img src="images/ca.png" alt=""></a>

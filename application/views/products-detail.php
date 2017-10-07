@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header') ?>
+<?php $this->load->view('layout/header', $header) ?>
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
@@ -39,29 +39,31 @@
 							<li class="compare"><a href="#"><span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>Add to Compare</a></li>
 						</ul>
 					</div>
-					<div class="quantity"> 
-						<div class="quantity-select">                           
-							<div class="entry value-minus">&nbsp;</div>
-							<div class="entry value"><span>1</span></div>
-							<div class="entry value-plus active">&nbsp;</div>
+					<form action="<?= site_url('cart/add_cart') ?>" method="post">
+						<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+						<div class="quantity"> 
+							<div class="quantity-select">              
+								<div class="entry value-minus">&nbsp;</div>
+								<input class="entry value" value="1" name="value" />
+								<div class="entry value-plus active">&nbsp;</div>
+							</div>
 						</div>
-					</div>
-					<!--quantity-->
-					<script>
-						$('.value-plus').on('click', function(){
-							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-							divUpd.text(newVal);
-						});
+						<!--quantity-->
+						<script>
+							$('.value-plus').on('click', function(){
+								var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.val(), 10)+1;
+								if(newVal<= <?= $product['product_stock'] ?>) divUpd.val(newVal);
+							});
 
-						$('.value-minus').on('click', function(){
-							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-							if(newVal>=1) divUpd.text(newVal);
-						});
-					</script>
-					<!--quantity-->
-
-					<a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>
-					<div class="clearfix"> </div>
+							$('.value-minus').on('click', function(){
+								var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.val(), 10)-1;
+								if(newVal>=1) divUpd.val(newVal);
+							});
+						</script>
+						<!--quantity-->
+						<button class="add-to item_add hvr-skew-backward" type="submit">Add to cart</button>
+						<div class="clearfix"> </div>
+					</form>
 				</div>
 
 			</div>
@@ -122,64 +124,11 @@
 	<div class=" rsidebar span_1_of_left">
 		<h4 class="cate">Categories</h4>
 		<ul class="menu-drop">
-			<li class="item1"><a href="#">Men </a>
-				<ul class="cute">
-					<li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-					<li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-					<li class="subitem3"><a href="product.html">Automatic Fails </a></li>
-				</ul>
-			</li>
-			<li class="item2"><a href="#">Women </a>
-				<ul class="cute">
-					<li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-					<li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-					<li class="subitem3"><a href="product.html">Automatic Fails </a></li>
-				</ul>
-			</li>
-			<li class="item3"><a href="#">Kids</a>
-				<ul class="cute">
-					<li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-					<li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-					<li class="subitem3"><a href="product.html">Automatic Fails</a></li>
-				</ul>
-			</li>
-			<li class="item4"><a href="#">Accessories</a>
-				<ul class="cute">
-					<li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-					<li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-					<li class="subitem3"><a href="product.html">Automatic Fails</a></li>
-				</ul>
-			</li>
-
-			<li class="item4"><a href="#">Shoes</a>
-				<ul class="cute">
-					<li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-					<li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-					<li class="subitem3"><a href="product.html">Automatic Fails </a></li>
-				</ul>
-			</li>
+			<?php foreach ($header['list_categories'] as $cat) : ?>
+			<li><a href="<?= site_url('categories/detail/'.$cat['category_slug']) ?>"><?= $cat['category_name'] ?></a></li>
+			<?php endforeach; ?>
 		</ul>
 	</div>
-	<!--initiate accordion-->
-	<script type="text/javascript">
-		$(function() {
-			var menu_ul = $('.menu-drop > li > ul'),
-			menu_a  = $('.menu-drop > li > a');
-			menu_ul.hide();
-			menu_a.click(function(e) {
-				e.preventDefault();
-				if(!$(this).hasClass('active')) {
-					menu_a.removeClass('active');
-					menu_ul.filter(':visible').slideUp('normal');
-					$(this).addClass('active').next().stop(true,true).slideDown('normal');
-				} else {
-					$(this).removeClass('active');
-					$(this).next().stop(true,true).slideUp('normal');
-				}
-			});
-
-		});
-	</script>
 	<!--//menu-->
 	<section  class="sky-form">
 		<h4 class="cate">Discounts</h4>

@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header') ?>
+<?php $this->load->view('layout/header', $header) ?>
 <!--banner-->
 <div class="banner">
 <div class="container">

@@ -77,7 +77,6 @@ $(window).load(function() {
 });
 </script>
 
-	<script src="<?= base_url('resource/js/simpleCart.min.js') ?>"> </script>
 <!-- slide -->
 <script src="<?= base_url('resource/js/bootstrap.min.js') ?>"></script>
 

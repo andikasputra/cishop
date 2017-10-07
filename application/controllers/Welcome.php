@@ -23,9 +23,15 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		// load model
 		$this->load->model('m_product');
+		$this->load->model('m_category');
+		$this->load->model('m_brand');
 	}
 
 	public function index()	{
+		// list categories
+		$data['header']['list_categories'] = $this->m_category->get_all_categories();
+		// list brands
+		$data['header']['list_brands'] = $this->m_brand->get_all_brands();
 		// get data
 		$data['list_products'] = $this->m_product->get_new();
 		// list data
