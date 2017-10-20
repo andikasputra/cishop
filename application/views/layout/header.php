@@ -154,7 +154,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<li><a class="play-icon popup-with-zoom-anim" href="#small-dialog"><i class="glyphicon glyphicon-search"> </i></a></li>
 						</ul>
 						<div class="cart box_1">
-							<a href="checkout.html">
+							<a href="<?= site_url('cart') ?>">
 								<h3> <div class="total">Rp
 									<span class="simpleCart_total"><?= number_format($this->cart->total(),2,',','.'); ?></span></div>
 									<img src="<?= base_url('resource/images/cart.png') ?>" alt=""/></h3>
