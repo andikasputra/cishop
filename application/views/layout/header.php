@@ -63,9 +63,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="container">
 				<div class="col-sm-5 col-md-offset-2  header-login">
 					<ul >
-						<li><a href="login.html">Login</a></li>
-						<li><a href="register.html">Register</a></li>
-						<li><a href="checkout.html">Checkout</a></li>
+						<li><a href="<?= site_url('auth/login') ?>">Login</a></li>
+						<li><a href="<?= site_url('auth/register') ?>">Register</a></li>
+						<li><a href="<?= site_url('cart') ?>">Checkout</a></li>
 					</ul>
 				</div>
 				

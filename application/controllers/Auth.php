@@ -7,6 +7,7 @@ class Auth extends CI_Controller {
 		$this->load->model('m_category');
 		$this->load->model('m_brand');
 		$this->load->model('m_user');
+		$this->load->model('m_preference');
 		// load library
 		$this->load->library('form_validation');
 	}
@@ -48,14 +49,16 @@ class Auth extends CI_Controller {
 				/*
 				 * KIRIM EMAIL
 				 */
+				// email setting
+				$mail_setting = $this->m_preference->get_mail_setting();
 				// load library email
 				$this->load->library('email');
 				// configurasi email
 				$config['protocol'] = 'smtp';
-				$config['smtp_host'] = 'ssl://smtp.gmail.com';
-				$config['smtp_user'] = 'cishopcodeigniter@gmail.com';
-				$config['smtp_pass'] = 'codeignitershop';
-				$config['smtp_port'] = '465';
+				$config['smtp_host'] = $mail_setting['smtp_host'];
+				$config['smtp_user'] = $mail_setting['smtp_user'];
+				$config['smtp_pass'] = $mail_setting['smtp_pass'];
+				$config['smtp_port'] = $mail_setting['smtp_port'];
 				$config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
 				// initialize
