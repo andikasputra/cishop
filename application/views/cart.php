@@ -38,7 +38,7 @@
 		</div>
 		<div class="produced">
 			<?php if (!empty($this->session->userdata('login'))) : ?>
-				<a href="single.html" class="hvr-skew-backward">Produced To Buy</a>
+				<a href="<?= site_url('cart/checkout') ?>" class="hvr-skew-backward">Produced To Buy</a>
 			<?php else : ?>
 				<a href="<?= site_url('auth/login') ?>" class="hvr-skew-backward">Login To Process</a>
 			<?php endif; ?>

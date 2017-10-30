@@ -11,19 +11,16 @@
 <div class="container">
 	<div class="login">
 		
-		<form>
+		<form action="<?= site_url('auth/login_process') ?>" method="post">
 			<div class="col-md-6 login-do">
 				<div class="login-mail">
-					<input type="text" placeholder="Email" required="">
-					<i  class="glyphicon glyphicon-envelope"></i>
+					<input type="text" placeholder="Username" required="required" name="user_name">
+					<i class="glyphicon glyphicon-envelope"></i>
 				</div>
 				<div class="login-mail">
-					<input type="password" placeholder="Password" required="">
+					<input type="password" placeholder="Password" required="required" name="user_password">
 					<i class="glyphicon glyphicon-lock"></i>
 				</div>
-				<a class="news-letter " href="#">
-					<label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
-				</a>
 				<label class="hvr-skew-backward">
 					<input type="submit" value="login">
 				</label>

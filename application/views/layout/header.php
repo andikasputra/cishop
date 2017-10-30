@@ -63,8 +63,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="container">
 				<div class="col-sm-5 col-md-offset-2  header-login">
 					<ul >
+						<?php if (empty($this->session->userdata('login'))) : ?>
 						<li><a href="<?= site_url('auth/login') ?>">Login</a></li>
 						<li><a href="<?= site_url('auth/register') ?>">Register</a></li>
+						<?php else : 
+						$user = $this->session->userdata('login');
+						?>
+						<li><a href="<?= site_url('auth/logout') ?>">Logout (<?= $user['user_alias'] ?>)</a></li>
+						<?php endif; ?>
 						<li><a href="<?= site_url('cart') ?>">Checkout</a></li>
 					</ul>
 				</div>

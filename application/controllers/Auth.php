@@ -21,6 +21,30 @@ class Auth extends CI_Controller {
 		$this->load->view('login', $data);
 	}
 
+	// login process
+	public function login_process() {
+		// validation
+		$this->form_validation->set_rules('user_name', 'Username', 'required');
+		$this->form_validation->set_rules('user_password', 'Password', 'required');
+		// process
+		if ($this->form_validation->run() !== FALSE) {
+			// get user by username & password
+			$where = array(
+				'user_name' => $this->input->post('user_name'),
+				'user_password' => sha1($this->input->post('user_password')),
+			);
+			$user = $this->m_user->get_detail_user($where);
+			// jika user tidak ditemukan
+			if (empty($user)) {
+				redirect('auth/login');
+			}
+			// set session
+			$this->session->set_userdata('login', $user);
+			// redirect ke cart
+			redirect('cart');
+		}
+	}
+
 	// register page
 	public function register() {
 		// list categories
@@ -86,4 +110,13 @@ class Auth extends CI_Controller {
 			}
 		}
 	}
+
+	// logout
+	public function logout() {
+		// hapus session login
+		$this->session->unset_userdata('login');
+		// redirect to login page
+		redirect('auth/login');
+	}
+
 }
