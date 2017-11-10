@@ -38,20 +38,36 @@
 		</div>
 		<div class="produced">
 			<?php if (!empty($this->session->userdata('login'))) : ?>
-				<form action="<?= site_url('cart/save_address') ?>" method="post">
+				<form action="<?= site_url('cart/save_transaction') ?>" method="post">
 					<?php 
 					$user = $this->session->userdata('login'); ?>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input type="text" name="address_to" class="form-control" value="<?= $user['user_alias'] ?>" placeholder="Nama Penerima">
+							<input type="text" name="address_nama" class="form-control" value="<?= $user['user_alias'] ?>" placeholder="Nama Penerima">
 						</div>
 						<div class="form-group">
 							<input type="text" name="address_phone" class="form-control" placeholder="No Handphone Penerima">
 						</div>
 						<div class="form-group">
-							<select name="address_city" class="form-control" placeholder="Kota Tujuan">
+							<select name="address_city" class="form-control" placeholder="Kota Tujuan" required="required">
 								<option value=""></option>
 							</select>
+						</div>
+						<input type="hidden" name="address_kab">
+						<div class="form-group">
+							<input type="text" name="address_prov" class="form-control" placeholder="Provinsi" required="required">
+						</div>
+						<div class="form-group">
+							<input type="text" name="address_kec" class="form-control" placeholder="Kecamatan" required="required">
+						</div>
+						<div class="form-group">
+							<input type="text" name="address_kel" class="form-control" placeholder="Kelurahan" required="required">
+						</div>
+						<div class="form-group">
+							<input type="text" name="address_pos" class="form-control" placeholder="Kode Pos" required="required">
+						</div>
+						<div class="form-group">
+							<textarea type="text" name="address_alamat" class="form-control" rows="3" required="required" placeholder="Alamat"></textarea>
 						</div>
 						<div class="form-group">
 							<select name="service" class="form-control" placeholder="Layanan">
@@ -67,8 +83,8 @@
 							<input type="text" name="total" class="form-control" readonly="readonly" value="<?= number_format($this->cart->total(),2,',','.'); ?>">
 						</div>
 					</div>
+					<button class="btn btn-danger hrv-skew-backward" type="submit">Process To Buy</button>
 				</form>
-				<a href="<?= site_url('cart/checkout') ?>" class="hvr-skew-backward">Produced To Buy</a>
 			<?php else : ?>
 				<a href="<?= site_url('auth/login') ?>" class="hvr-skew-backward">Login To Process</a>
 			<?php endif; ?>
@@ -96,11 +112,11 @@
 				key: 'be50f8a185202f670a47e1a6967dce7a'
 			}
 		}).success(function(data) {
-			var options = '';
+			var options = '<option></option>';
 			// dari setiap city yg didapat
 			data.rajaongkir.results.forEach(function(item) {
 				// bikin option dari data city yg didapat
-				options += '<option value="'+item.city_id+'">'+item.city_name+'</option>'
+				options += '<option value="'+item.city_id+'">'+item.type+' '+item.city_name+'</option>'
 			})
 			// masukkan options yg sudah dibuat ke dalam select
 			$('select[name="address_city"]').html(options)
@@ -120,13 +136,15 @@
 					courier: 'jne'
 				}
 			}).success(function(data) {
-				var options = '';
+				var options = '<option></option>';
 				// dari setiap city yg didapat
 				data.rajaongkir.results[0].costs.forEach(function(item) {
 					// bikin option dari data city yg didapat
 					options += '<option value="'+item.cost[0].value+'">'+item.service+'</option>'
 				})
 				$('select[name="service"]').html(options)
+				// set province
+				$('input[name="address_prov"]').val(data.rajaongkir.destination_details.province)
 			})
 			// jika pilih service oke / reg / yes
 			$('select[name="service"]').change(function() {
