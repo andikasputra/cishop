@@ -1,4 +1,5 @@
 <?php $this->load->view('layout/header', $header); ?>
+<link rel="stylesheet" href="<?= base_url('resource/vendors/select2/dist/css/select2.min.css') ?>">
 <!--banner-->
 <!-- <div class="banner-top">
 	<div class="container">
@@ -36,7 +37,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="produced">
+		<div class="">
 			<?php if (!empty($this->session->userdata('login'))) : ?>
 				<form action="<?= site_url('cart/save_transaction') ?>" method="post">
 					<?php 
@@ -49,7 +50,7 @@
 							<input type="text" name="address_phone" class="form-control" placeholder="No Handphone Penerima">
 						</div>
 						<div class="form-group">
-							<select name="address_city" class="form-control" placeholder="Kota Tujuan" required="required">
+							<select name="address_city" class="form-control" data-placeholder="Kota Tujuan" required="required">
 								<option value=""></option>
 							</select>
 						</div>
@@ -70,7 +71,7 @@
 							<textarea type="text" name="address_alamat" class="form-control" rows="3" required="required" placeholder="Alamat"></textarea>
 						</div>
 						<div class="form-group">
-							<select name="service" class="form-control" placeholder="Layanan">
+							<select name="service" class="form-control" data-placeholder="Layanan">
 								<option value=""></option>
 							</select>
 						</div>
@@ -82,8 +83,10 @@
 						<div class="form-group">
 							<input type="text" name="total" class="form-control" readonly="readonly" value="<?= number_format($this->cart->total(),2,',','.'); ?>">
 						</div>
+						<div class="form-group">
+							<button class="btn btn-danger hrv-skew-backward" type="submit">Process To Buy</button>
+						</div>
 					</div>
-					<button class="btn btn-danger hrv-skew-backward" type="submit">Process To Buy</button>
 				</form>
 			<?php else : ?>
 				<a href="<?= site_url('auth/login') ?>" class="hvr-skew-backward">Login To Process</a>
@@ -102,8 +105,12 @@
 <!--//brand-->
 <!--//content-->
 <?php $this->load->view('layout/footer'); ?>
+<!-- load plugin select2 -->
+<script src="<?= base_url('resource/vendors/select2/dist/js/select2.min.js') ?>"></script>
 <script>
 	$(document).ready(function() {
+		// use select2 utk semua element select
+		$('select').select2();
 		// request data city / kota ke rajaongkir
 		$.ajax({
 			url: 'https://api.rajaongkir.com/starter/city',
@@ -145,6 +152,8 @@
 				$('select[name="service"]').html(options)
 				// set province
 				$('input[name="address_prov"]').val(data.rajaongkir.destination_details.province)
+				// set kabupaten
+				$('input[name="address_kab"]').val(data.rajaongkir.destination_details.type+' '+data.rajaongkir.destination_details.city_name)
 			})
 			// jika pilih service oke / reg / yes
 			$('select[name="service"]').change(function() {

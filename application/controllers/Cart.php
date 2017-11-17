@@ -6,6 +6,8 @@ class Cart extends CI_Controller {
 		$this->load->model('m_product');
 		$this->load->model('m_category');
 		$this->load->model('m_brand');
+		$this->load->model('m_address');
+		$this->load->model('m_transaction');
 		// load library
 		$this->load->library('form_validation');
 	}
@@ -53,5 +55,55 @@ class Cart extends CI_Controller {
 		$this->cart->destroy();
 		// kembalikan ke home
 		redirect('');
+	}
+
+	// save transaction
+	public function save_transaction() {
+		// cek input
+		$this->form_validation->set_rules('address_nama', 'Nama Penerima', 'required');
+		$this->form_validation->set_rules('address_phone', 'No Telepon', 'required');
+		$this->form_validation->set_rules('address_kab', 'Kota / Kabupaten', 'required');
+		$this->form_validation->set_rules('address_prov', 'Provinsi', 'required');
+		$this->form_validation->set_rules('address_kec', 'Kecamatan', 'required');
+		$this->form_validation->set_rules('address_kel', 'Kelurahan', 'required');
+		$this->form_validation->set_rules('address_pos', 'Kode POS', 'required');
+		$this->form_validation->set_rules('address_alamat', 'Alamat Lengkap', 'required');
+		$this->form_validation->set_rules('service', 'Layanan', 'required');
+		$this->form_validation->set_rules('ongkir', 'Ongkos Kirim', 'required');
+		$this->form_validation->set_rules('total', 'Total', 'required');
+		// run
+		if ($this->form_validation->run() !== FALSE) {
+			$user = $this->session->userdata('login');
+			// data address / alamat pengiriman
+			$params = array(
+				'user_id' => $user['user_id'],
+				'address_nama' => $this->input->post('address_nama'),
+				'address_phone' => $this->input->post('address_phone'),
+				'address_kab' => $this->input->post('address_kab'),
+				'address_kec' => $this->input->post('address_kec'),
+				'address_kel' => $this->input->post('address_kel'),
+				'address_pos' => $this->input->post('address_pos'),
+				'address_alamat' => $this->input->post('address_alamat'),
+			);
+			$address_id = $this->m_address->insert($params);
+			// data transaksi
+			$params = array(
+				'address_id' => $address_id,
+				'tran_date' => date('Y-m-d'),
+				'tran_cost' => $this->input->post('ongkir')
+			);
+			$tran_id = $this->m_transaction->insert($params);
+			// insert item
+			foreach ($this->cart->contents() as $cart) {
+				$params = array(
+					'tran_id' => $tran_id,
+					'product_id' => $cart['id'],
+					'item_count' => $cart['qty'],
+					'item_selling_price' => $cart['price'],
+					'item_purchasing_price' => 0,
+				);
+				$this->m_transaction->insert_item($params);
+			}
+		}
 	}
 }
