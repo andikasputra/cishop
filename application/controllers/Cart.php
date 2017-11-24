@@ -8,6 +8,7 @@ class Cart extends CI_Controller {
 		$this->load->model('m_brand');
 		$this->load->model('m_address');
 		$this->load->model('m_transaction');
+		$this->load->model('m_preference');
 		// load library
 		$this->load->library('form_validation');
 	}
@@ -86,23 +87,77 @@ class Cart extends CI_Controller {
 				'address_alamat' => $this->input->post('address_alamat'),
 			);
 			$address_id = $this->m_address->insert($params);
+			$ongkir = $this->input->post('ongkir');
 			// data transaksi
 			$params = array(
 				'address_id' => $address_id,
 				'tran_date' => date('Y-m-d'),
-				'tran_cost' => $this->input->post('ongkir')
+				'tran_cost' => $ongkir
 			);
 			$tran_id = $this->m_transaction->insert($params);
 			// insert item
 			foreach ($this->cart->contents() as $cart) {
+				// ambil product
+				$where = array('product_id' => $cart['id']);
+				$product = $this->m_product->get_detail($where);
+				// data yg akan dimasukkan ke transaksi
 				$params = array(
 					'tran_id' => $tran_id,
 					'product_id' => $cart['id'],
 					'item_count' => $cart['qty'],
-					'item_selling_price' => $cart['price'],
-					'item_purchasing_price' => 0,
+					'item_selling_price' => $product['product_selling_price'],
+					'item_purchasing_price' => $product['product_purchasing_price'],
 				);
 				$this->m_transaction->insert_item($params);
+				// update stock
+				$params = array(
+					'product_stock' => ($product['product_stock'] - $cart['qty'])
+				);
+				$where = array('product_id' => $cart['id']);
+				$this->m_product->update($params, $where);
+			}
+			/*
+			 * KIRIM EMAIL
+			 */
+			// email setting
+			$mail_setting = $this->m_preference->get_mail_setting();
+			// load library email
+			$this->load->library('email');
+			// get user data
+			$user = $this->session->userdata('login');
+			// configurasi email
+			$config['protocol'] = 'smtp';
+			$config['smtp_host'] = $mail_setting['smtp_host'];
+			$config['smtp_user'] = $mail_setting['smtp_user'];
+			$config['smtp_pass'] = $mail_setting['smtp_pass'];
+			$config['smtp_port'] = $mail_setting['smtp_port'];
+			$config['mailtype'] = 'html';
+      $config['charset'] = 'utf-8';
+			// initialize
+			$this->email->initialize($config);
+			// email
+      $this->email->set_newline("\r\n");
+			$this->email->from($config['smtp_user']);
+			$this->email->to($user['user_email']);
+			$this->email->subject('Informasi Tagihan');
+			$total_tagihan = $this->cart->total() + $ongkir;
+			$message = "
+			<h1>Informasi Tagihan #".$tran_id."</h1>
+			<p>Wahai $params[user_alias], berikut adalah informasi tagihan</p>
+			<p>Jumlah yang harus dibyar : <br>
+			<span style='font-size:30px;font-weight:bold'>Rp ".number_format($total_tagihan,2,',','.')."</span></p>
+			<p>Segera kirim ke Rekening Mandiri 7609 09887 98089 an CiShop</p>
+			<p>Jika sudah transfer, silahkan konfirmasi dengan <a href='".site_url('user/konfirmasi/'.$tran_id)."'>klik di sini</a></p>
+			<p>Sekian dan terima kasih.. Salam sayang CiShop</p>";
+			$this->email->message($message);
+			// kirim
+			if ($this->email->send()) {
+				// kosongkan cart
+				$this->cart->destroy();
+				// arahkan ke nota
+				redirect('user/tran_detail/'.$tran_id);
+			} else {
+				echo "gagal";
 			}
 		}
 	}

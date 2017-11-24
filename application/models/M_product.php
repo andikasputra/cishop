@@ -39,4 +39,9 @@ class M_product extends CI_Model {
 	public function get_photos($where) {
 		return $this->db->get_where('product_photos', $where)->result_array();
 	}
+
+	// update product
+	public function update($params, $where) {
+		return $this->db->update('products', $params, $where);
+	}
 }
