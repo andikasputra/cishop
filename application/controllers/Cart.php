@@ -155,7 +155,7 @@ class Cart extends CI_Controller {
 				// kosongkan cart
 				$this->cart->destroy();
 				// arahkan ke nota
-				redirect('user/tran_detail/'.$tran_id);
+				redirect('account/order/'.$tran_id);
 			} else {
 				echo "gagal";
 			}
