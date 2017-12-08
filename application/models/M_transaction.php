@@ -1,5 +1,13 @@
 <?php 
 class M_transaction extends CI_Model {
+	// get list data transaksi
+	public function get_list_trx($where) {
+		$this->db->join('address a', 'a.address_id = b.address_id');
+		$this->db->join('transaction_items c', 'c.tran_id = b.tran_id');
+		$this->db->group_by('b.tran_id');
+		$this->db->select('*, sum(c.item_selling_price) as price');
+		return $this->db->get_where('transactions b', $where)->result_array();
+	}
 	// get detail data transaksi
 	public function get_detail_transaction($where) {
 		$this->db->join('address a', 'a.address_id = b.address_id');

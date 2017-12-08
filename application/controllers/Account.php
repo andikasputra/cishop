@@ -15,6 +15,19 @@ class Account extends CI_Controller {
 
 	}
 
+	// list order yg pernah dibuat / dibeli
+	public function orders() {
+		// get user data
+		$user = $this->session->userdata('login');
+		// ambil daftar order / transaksi oleh user
+		$where = array(
+			'user_id' => $user['user_id']
+		);
+		$data['list_trx'] = $this->m_transaction->get_list_trx($where);
+		// load view
+		$this->load->view('account_orders', $data);
+	}
+
 	// detail order
 	public function order($tran_id = "") {
 		// get user data
@@ -29,7 +42,6 @@ class Account extends CI_Controller {
 			'tran_id' => $tran_id
 		);
 		$data['list_item'] = $this->m_transaction->get_list_item($where);
-		// print_r($data);
 		// load view
 		$this->load->view('account_order', $data);
 	}
