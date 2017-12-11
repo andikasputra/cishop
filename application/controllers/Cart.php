@@ -147,7 +147,7 @@ class Cart extends CI_Controller {
 			<p>Jumlah yang harus dibyar : <br>
 			<span style='font-size:30px;font-weight:bold'>Rp ".number_format($total_tagihan,2,',','.')."</span></p>
 			<p>Segera kirim ke Rekening Mandiri 7609 09887 98089 an CiShop</p>
-			<p>Jika sudah transfer, silahkan konfirmasi dengan <a href='".site_url('user/konfirmasi/'.$tran_id)."'>klik di sini</a></p>
+			<p>Jika sudah transfer, silahkan konfirmasi dengan <a href='".site_url('cart/confirm/'.$tran_id)."'>klik di sini</a></p>
 			<p>Sekian dan terima kasih.. Salam sayang CiShop</p>";
 			$this->email->message($message);
 			// kirim
@@ -160,5 +160,16 @@ class Cart extends CI_Controller {
 				echo "gagal";
 			}
 		}
+	}
+
+	// konfirmasi pembayaran
+	public function confirm() {
+		// load view
+		$this->load->view('cart_confirm');
+	}
+
+	// proses konfirmasi pembayaran
+	public function confirm_process() {
+		print_r($_POST);
 	}
 }
