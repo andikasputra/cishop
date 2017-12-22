@@ -170,6 +170,46 @@ class Cart extends CI_Controller {
 
 	// proses konfirmasi pembayaran
 	public function confirm_process() {
-		print_r($_POST);
+		// cek input
+		$this->form_validation->set_rules('tran_id', 'ID Transaksi', 'required');
+		$this->form_validation->set_rules('payment_name', 'Nama Pengirim', 'required');
+		$this->form_validation->set_rules('payment_total', 'Total Bayar', 'required');
+		$this->form_validation->set_rules('payment_date', 'Tgl Transfer', 'required');
+		// run validasi
+		if ($this->form_validation->run() !== FALSE) {
+			// insert payment
+			$params = array(
+				'tran_id' => $this->input->post('tran_id'),
+				'payment_name' => $this->input->post('payment_name'),
+				'payment_total' => $this->input->post('payment_total'),
+				'payment_date' => $this->input->post('payment_date'),
+			);
+			// insert
+			$payment_id = $this->m_transaction->insert_payment($params);
+			if ($payment_id) {
+				$config['upload_path'] = 'resource/images/payments/';
+				$config['allowed_types'] = 'jpg|png|pdf';
+				$config['file_name'] = $this->input->post('tran_id');
+				// load library upload & menggunakan config yg dibuat
+				$this->load->library('upload', $config);
+				// proses upload
+				// attachment adalah id transaksi
+				if ($this->upload->do_upload('payment_attachment')) {
+					// ambil nama file yg baru diupload & masukkan ke variable payment_attachment
+					$payment_attachment = $this->upload->data('file_name');
+				}
+				$params = array(
+					'payment_attachment' =>  $payment_attachment
+				);
+				$where = array(
+					'payment_id' => $payment_id
+				);
+				// update payment
+				if ($this->m_transaction->update_payment($params, $where)) {
+					// sukses
+					redirect('cart/payment_success');
+				}
+			}
+		}
 	}
 }

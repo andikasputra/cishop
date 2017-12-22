@@ -27,4 +27,14 @@ class M_transaction extends CI_Model {
 	public function insert_item($params) {
 		return $this->db->insert('transaction_items', $params);
 	}
+
+	// insert pembayaran
+	public function insert_payment($params) {
+		$this->db->insert('payments', $params);
+		return $this->db->insert_id();
+	}
+	// update payment
+	public function update_payment($params, $where) {
+		return $this->db->update('payments', $params, $where);
+	}
 }
