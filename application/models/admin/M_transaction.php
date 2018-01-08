@@ -12,4 +12,8 @@ class M_transaction extends CI_Model {
 		$this->db->group_by('a.tran_id');
 		return $this->db->get()->result_array();
 	}
+
+	public function update_payment($params, $where) {
+		return $this->db->update('payments', $params, $where);
+	}
 }

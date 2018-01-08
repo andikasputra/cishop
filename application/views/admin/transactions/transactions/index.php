@@ -47,17 +47,22 @@
                   <?php
                   $no = 1;
                   foreach ($list_transaction as $a) : ?>
-                  <tr <?= (empty($a['payment_status']) || $a['payment_status'] == 'waiting') ? 'style="color: #f00"' : '' ?>>
+                  <tr>
                     <td><?= $no++ ?></td>
                     <td><?= $a['user_alias'] ?></td>
                     <td><?= $a['tran_date'] ?></td>
-                    <td><?= empty($a['payment_status']) ? 'waiting' : $a['payment_status'] ?></td>
+                    <td><?= empty($a['payment_status']) ? '<b style="color: #a00">belum bayar</b>' : $a['payment_status'] ?></td>
                     <td><?= $a['jumlah'] ?></td>
                     <td><?= number_format($a['total'] + $a['tran_cost'], 2, ',', '.') ?></td>
                     <td>
-                      <a href="<?= site_url('admin/transactions/transactions/delete/') ?>" class="btn btn-xs btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this brand?')">
-                        <i class="fa fa-trash"></i>
+                      <a href="<?= site_url('admin/transactions/transactions/verify/'.$a['tran_id']) ?>" class="btn btn-xs btn-success" title="Verify" onclick="return confirm('Are you sure you want to verify this transaction?')">
+                        <i class="fa fa-check"></i>
                       </a>
+                      <?php if (!empty($a['payment_attachment'])) : ?>
+                      <a href="<?= base_url('resource/images/payments/'.$a['payment_attachment']) ?>" class="btn btn-xs btn-primary" target="_blank">
+                        <i class="fa fa-download"></i>
+                      </a>
+                      <?php endif; ?>
                     </td>
                   </tr>
                   <?php endforeach; ?>

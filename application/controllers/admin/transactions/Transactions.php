@@ -20,4 +20,17 @@ class Transactions extends CI_Controller {
 		// load view
 		$this->load->view('admin/transactions/transactions/index', $data);
 	}
+
+	public function verify($tran_id) {
+		// params
+		$params = array(
+			'payment_status' => 'done'
+		);
+		$where = array(
+			'tran_id' => $tran_id
+		);
+		// update
+		$this->m_transaction->update_payment($params, $where);
+		redirect('admin/transactions/transactions');
+	}
 }
