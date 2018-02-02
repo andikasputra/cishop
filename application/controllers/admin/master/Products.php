@@ -12,11 +12,21 @@ class Products extends CI_Controller {
 		$this->load->model('admin/master/m_product');
 		// load library
 		$this->load->library('form_validation');
+		$this->load->library('pagination');
 	}
 	
 	public function index() {
+		// pagination
+		$config['base_url'] = site_url('admin/master/products/index');
+		$config['per_page'] = 5;
+		$config['uri_segment'] = 5;
+		$config['total_rows'] = $this->m_product->get_total_data();
+		$start = $this->uri->segment(5);
+		// echo $start;
+		// print_r($this->m_product->get_total_data());exit();
+		$this->pagination->initialize($config);
 		// all data
-		$data['list_product'] = $this->m_product->get_all_data();
+		$data['list_product'] = $this->m_product->get_all_data($start, $config['per_page']);
 		// load view
 		$this->load->view('admin/master/products/index', $data);
 	}

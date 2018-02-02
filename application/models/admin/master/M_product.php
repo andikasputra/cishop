@@ -2,10 +2,21 @@
 class M_product extends CI_Model {
 
 	// ambil semua data product
-	public function get_all_data() {
+	public function get_all_data($start, $end) {
 		$this->db->join('categories', 'categories.category_id = products.category_id');
 		$this->db->join('brands', 'brands.brand_id = products.brand_id');
+		$this->db->limit($end, $start);
 		return $this->db->get('products')->result_array();
+	}
+	// total data
+	public function get_total_data() {
+		$this->db->select('COUNT(*) AS total');
+		$this->db->join('categories', 'categories.category_id = products.category_id');
+		$this->db->join('brands', 'brands.brand_id = products.brand_id');
+		// return $this->db->get('products')->row_array();
+		$data = $this->db->get('products')->row_array();
+		// echo $this->db->last_query();
+		return $data['total'];
 	}
 
 	public function get_detail_data($params) {

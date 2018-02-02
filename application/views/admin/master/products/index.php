@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                   <?php
-                  $no = 1;
+                  $no = $this->uri->segment(5) +1;
                   foreach ($list_product as $a) : ?>
                   <tr>
                     <td><?= $no++ ?></td>
@@ -68,6 +68,7 @@
                   <?php endforeach; ?>
                 </tbody>
               </table>
+              <?= $this->pagination->create_links() ?>
 
             </div>
           </div>

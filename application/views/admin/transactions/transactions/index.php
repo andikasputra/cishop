@@ -47,7 +47,7 @@
                   <?php
                   $no = 1;
                   foreach ($list_transaction as $a) : ?>
-                  <tr>
+                  <tr <?= ($a['tran_expired'] == 'yes') ? 'style="color: #f66"' : '' ?>>
                     <td><?= $no++ ?></td>
                     <td><?= $a['user_alias'] ?></td>
                     <td><?= $a['tran_date'] ?></td>
@@ -55,9 +55,17 @@
                     <td><?= $a['jumlah'] ?></td>
                     <td><?= number_format($a['total'] + $a['tran_cost'], 2, ',', '.') ?></td>
                     <td>
-                      <a href="<?= site_url('admin/transactions/transactions/verify/'.$a['tran_id']) ?>" class="btn btn-xs btn-success" title="Verify" onclick="return confirm('Are you sure you want to verify this transaction?')">
-                        <i class="fa fa-check"></i>
-                      </a>
+                      <?php if (!empty($a['payment_status'])) : ?>
+                        <?php if ($a['payment_status'] == 'waiting') : ?>
+                          <a href="<?= site_url('admin/transactions/transactions/verify/'.$a['tran_id']) ?>" class="btn btn-xs btn-success" title="Verify" onclick="return confirm('Are you sure you want to verify this transaction?')">
+                            <i class="fa fa-check"></i>
+                          </a>
+                        <?php endif; ?>
+                      <?php else: ?>
+                        <a href="<?= site_url('admin/transactions/transactions/expired/'.$a['tran_id']) ?>" class="btn btn-xs btn-warning" title="Set Expired" onclick="return confirm('Are you sure you want to make this transaction expired?')">
+                          <i class="fa fa-times"></i>
+                        </a>
+                      <?php endif; ?>
                       <?php if (!empty($a['payment_attachment'])) : ?>
                       <a href="<?= base_url('resource/images/payments/'.$a['payment_attachment']) ?>" class="btn btn-xs btn-primary" target="_blank">
                         <i class="fa fa-download"></i>

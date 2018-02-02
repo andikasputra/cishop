@@ -33,4 +33,15 @@ class Transactions extends CI_Controller {
 		$this->m_transaction->update_payment($params, $where);
 		redirect('admin/transactions/transactions');
 	}
+
+	public function expired($tran_id) {
+		$params = array(
+			'tran_expired' => 'yes'
+		);
+		$where = array(
+			'tran_id' => $tran_id
+		);
+		$this->m_transaction->update_transaction($params, $where);
+		redirect('admin/transactions/transactions');
+	}
 }
