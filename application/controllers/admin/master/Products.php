@@ -18,7 +18,7 @@ class Products extends CI_Controller {
 	public function index() {
 		// pagination
 		$config['base_url'] = site_url('admin/master/products/index');
-		$config['per_page'] = 5;
+		$config['per_page'] = 10;
 		$config['uri_segment'] = 5;
 		$config['total_rows'] = $this->m_product->get_total_data();
 		// style pagination
