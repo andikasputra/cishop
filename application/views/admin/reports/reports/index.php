@@ -27,14 +27,6 @@
               <form action="<?= site_url('admin/reports/reports/filter_process') ?>" method="post">
                 <div class="col-md-3">
                   <div class="form-group">
-                    <select name="kategori" class="form-control">
-                      <option value="">-- Semua Kategori --</option>
-                      <option value=""></option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
                     <select name="bulan" class="form-control">
                       <option value="">-- Semua Bulan --</option>
                       <option value="01" <?= ($cari['bulan'] == '01') ? 'selected' : '' ?>>Januari</option>
@@ -50,6 +42,20 @@
                       <option value="11" <?= ($cari['bulan'] == '11') ? 'selected' : '' ?>>November</option>
                       <option value="12" <?= ($cari['bulan'] == '12') ? 'selected' : '' ?>>Desember</option>
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select name="tahun" class="form-control">
+                      <?php foreach($list_tahun as $tahun) : ?>
+                      <option value="<?= $tahun['tahun'] ?>" <?= ($cari['tahun'] == $tahun['tahun'] ? 'selected' : '') ?>><?= $tahun['tahun'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" name="nama" value="<?= $cari['nama'] ?>">
                   </div>
                 </div>
                 <div class="col-md-3">
